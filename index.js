@@ -1,22 +1,17 @@
 const express = require("express");
-const cors = require("cors");
 const fs = require("fs");
-const path = require("path");
+const cors = require("cors");
 const app = express();
 
 // Configuración
 app.use(cors());
 app.use(express.json());
 
-const DATA_FILE = path.join("/data", "data.json");
+const DATA_FILE = "./data/data.json"; // Ruta al archivo JSON
 
 // Leer datos del archivo
 function readData() {
   return new Promise((resolve, reject) => {
-    if (!fs.existsSync(DATA_FILE)) {
-      fs.writeFileSync(DATA_FILE, JSON.stringify({ availableDates: [], occupiedDates: [] }, null, 2));
-    }
-
     fs.readFile(DATA_FILE, "utf8", (err, data) => {
       if (err) return reject(err);
       resolve(JSON.parse(data));
