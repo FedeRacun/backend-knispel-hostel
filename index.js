@@ -9,6 +9,12 @@ app.use(express.json());
 
 const DATA_FILE = "./data/data.json"; // Ruta al archivo JSON
 
+// Inicializar el archivo si no existe
+if (!fs.existsSync(DATA_FILE)) {
+  fs.writeFileSync(DATA_FILE, JSON.stringify({ availableDates: [], occupiedDates: [] }, null, 2));
+  console.log("Archivo data.json creado.");
+}
+
 // Leer datos del archivo
 function readData() {
   return new Promise((resolve, reject) => {
